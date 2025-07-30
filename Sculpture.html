@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>whh Sculpture Gallery</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      background: linear-gradient(to bottom, black, navy);
+      color: white;
+      font-family: SairaExtraCondensed-ExtraLight, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Logo and Nav Menu Styling */
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 110px;
+      width: auto;
+      z-index: 1;
+    }
+
+    .nav-menu {
+      position: absolute;
+      top: 130px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 30px;
+      font-size: 18px;
+      z-index: 2;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: rgb(247, 100, 32);
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .nav-menu a:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* larger thumbnails */
+  gap: 20px;
+  padding: 200px 20px 40px;
+  max-width: 1600px; /* wider container */
+  margin: 0 auto;
+}
+
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.3s;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.1);
+    }
+
+    .image-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      text-align: center;
+      padding: 5px 10px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .gallery-item:hover .image-title {
+      opacity: 1;
+    }
+
+    /* Lightbox Modal */
+    #lightbox {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+      z-index: 9999;
+    }
+
+    #lightbox img {
+      max-width: 60%;
+      max-height: 80%;
+      margin: 10px 0;
+      border-radius: 5px;
+      box-shadow: 0 0 15px #000;
+    }
+
+    #lightbox-text {
+      color: white;
+      font-size: 18px;
+      max-width: 60%;
+      white-space: pre-wrap;
+      margin-bottom: 20px;
+    }
+
+    #closeBtn {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      font-weight: bold;
+      z-index: 10000;
+    }
+
+    /* Navigation buttons */
+    #prevBtn, #nextBtn {
+      background: transparent;
+      border: none;
+      color: #f75d20;
+      font-size: 50px;
+      cursor: pointer;
+      user-select: none;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 0 20px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    #prevBtn:hover, #nextBtn:hover {
+      color: rgb(156, 205, 154);
+    }
+
+    #prevBtn {
+      left: 20px;
+    }
+
+    #nextBtn {
+      right: 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: black;
+      width: 100%;
+      position: relative;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Logo -->
+  <img src="images/whho.png" alt="Logo" class="logo" />
+
+  <!-- Navigation Menu -->
+  <div class="nav-menu">
+    <a href="index.html">Home</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="https://wehaveheaven.etsy.com" target="_blank">Shop</a>
+  </div>
+
+  <!-- Gallery Section -->
+  <section class="gallery"></section>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" onclick="closeImage()">
+    <span id="closeBtn" onclick="closeImage(event)">&times;</span>
+    <button id="prevBtn" onclick="prevImage(event)">&#10094;</button>
+    <img id="lightbox-img" />
+    <button id="nextBtn" onclick="nextImage(event)">&#10095;</button>
+    <p id="lightbox-text"></p>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Whh</p>
+  </footer>
+
+  <!-- JS Gallery Loader -->
+  <script>
+    // Sculpture data with multiple images each
+    const sculptures = [
+      {
+        title: "Y get a head",
+        description: "Ceramic Bique / Acrylic sculpture 6x4.",
+        images: ["images/sculpture1.jpg", "images/sculpture1.1.jpg", "images/sculpture1.2.jpg"]
+      },
+      {
+        title: "AChatGpt",
+        description: "Ceramic Bique / Acrylic sculpture 6x4",
+        images: ["images/sculpture2.jpg", "images/sculpture2.1.jpg"]
+      },
+      {
+        title: "MountainBear",
+        description: "Ceramic Bique / Acrylic sculpture 6x4",
+        images: ["images/sculpture3.jpg", "images/sculpture3.1.jpg", "images/sculpture3.2.jpg"]
+      },
+      {
+        title: "MountainBear2",
+        description: "Ceramic Bique / Acrylic sculpture 6x4",
+        images: ["images/sculpture4.jpg", "images/sculpture4.1.jpg", "images/sculpture4.2.jpg"]
+      },
+      {
+        title: "Form",
+        description: "Ceramic Bique / Acrylic sculpture 6x4",
+        images: ["images/sculpture5.jpg", "images/sculpture5.1.jpg", "images/sculpture5.2.jpg"]
+      },
+      {
+        title: "LeanGreen",
+        description: "Ceramic Bique / Acrylic sculpture 6x4.",
+        images: ["images/sculpture6.jpg", "images/sculpture6.1.jpg", "images/sculpture6.2.jpg"]
+      },
+      {
+        title: "Cute-face",
+        description: "Ceramic Bique / Acrylic sculpture 6x4..",
+        images: ["images/sculpture7.jpg", "images/sculpture7.1.jpg", "images/sculpture7.2.jpg"]
+      },
+      {
+        title: "MountainBear3",
+        description: "Ceramic Bique / Acrylic sculpture 6x4.",
+        images: ["images/sculpture8.jpg", "images/sculpture8.1.jpg"]
+      },
+      {
+        title: "Ashtray1",
+        description: "Ceramic Bique / Acrylic sculpture 6x4.",
+        images: ["images/sculpture9.jpg", "images/sculpture9.1.jpg"]
+      },
+      {
+        title: "blob",
+        description: "Ceramic Bique / Acrylic sculpture 6x4.",
+        images: ["images/sculpture10.jpg", "images/sculpture10.1.jpg"]
+      },
+      {
+        title: "outpost",
+        description: "Ceramic Bique / Acrylic sculpture 6x4.",
+        images: ["images/sculpture11.jpg", "images/sculpture11.1.jpg"]
+      },
+      {
+        title: "light lumpiness",
+        description: "Ceramic Bique / Acrylic sculpture 6x4.",
+        images: ["images/sculpture12.jpg", "images/sculpture12.1.jpg"]
+      },
+      {
+        title: "a face i'm going thru.",
+        description: "Ceramic Bique / Acrylic sculpture 6x4.",
+        images: ["images/sculpture14.jpg", "images/sculpture14.1.jpg"]
+      },
+      {
+        title: "Moonlit Night",
+        description: "The moon shining brightly over calm waters.",
+        images: ["images/sculpture16.jpg", "images/sculpture16.1.jpg"]
+      },
+      {
+        title: "Moonlit Night",
+        description: "The moon shining brightly over calm waters.",
+        images: ["images/sculpture17.jpg", "images/sculpture17.1.jpg"]
+      },
+      {
+        title: "Moonlit Night",
+        description: "The moon shining brightly over calm waters.",
+        images: ["images/sculpture18.jpg", "images/sculpture18.1.jpg"]
+      },
+      {
+        title: "Moonlit Night",
+        description: "The moon shining brightly over calm waters.",
+        images: ["images/sculpture19.jpg", "images/sculpture19.1.jpg"]
+      },
+      {
+        title: "Moonlit Night",
+        description: "The moon shining brightly over calm waters.",
+        images: ["images/sculpture20.jpg", "images/sculpture20.1.jpg"]
+      },
+      {
+        title: "Moonlit Night",
+        description: "The moon shining brightly over calm waters.",
+        images: ["images/sculpture21.jpg", "images/sculpture21.1.jpg"]
+      },
+      {
+        title: "Moonlit Night",
+        description: "The moon shining brightly over calm waters.",
+        images: ["images/sculpture22.jpg", "images/sculpture22.1.jpg"]
+      },
+      {
+        title: "Moonlit Night",
+        description: "The moon shining brightly over calm waters.",
+        images: ["images/sculpture23.jpg", "images/sculpture23.1.jpg"]
+      },
+      {
+        title: "Moonlit Night",
+        description: "The moon shining brightly over calm waters.",
+        images: ["images/sculpture24.jpg", "images/sculpture24.1.jpg"]
+      },
+      {
+        title: "Moonlit Night",
+        description: "The moon shining brightly over calm waters.",
+        images: ["images/sculpture25.jpg", "images/sculpture25.1.jpg"]
+      },
+      {
+        title: "Moonlit Night",
+        description: "The moon shining brightly over calm waters.",
+        images: ["images/sculpture26.jpg", "images/sculpture26.1.jpg"]
+      },
+      {
+        title: "Moonlit Night",
+        description: "The moon shining brightly over calm waters.",
+        images: ["images/sculpture27.jpg", "images/sculpture27.1.jpg"]
+      },
+      {
+        title: "Moonlit Night",
+        description: "The moon shining brightly over calm waters.",
+        images: ["images/sculpture28.jpg", "images/sculpture28.1.jpg"]
+      },
+      {
+        title: "Moonlit Night",
+        description: "The moon shining brightly over calm waters.",
+        images: ["images/sculpture29.jpg", "images/sculpture29.1.jpg"]
+      },
+      {
+        title: "Moonlit Night",
+        description: "The moon shining brightly over calm waters.",
+        images: ["images/sculpture30.jpg", "images/sculpture30.1.jpg"]
+      },
+    ];
+
+    const gallery = document.querySelector(".gallery");
+
+    // Build the gallery grid dynamically using first image & title
+    sculptures.forEach((sculpture, index) => {
+      const div = document.createElement("div");
+      div.className = "gallery-item";
+      div.setAttribute("onclick", `openImage(${index}, 0)`);
+      div.innerHTML = `
+        <img src="${sculpture.images[0]}" alt="${sculpture.title}">
+        <div class="image-title">${sculpture.title}</div>
+      `;
+      gallery.appendChild(div);
+    });
+
+    let currentSculptureIndex = 0;
+    let currentImageIndex = 0;
+
+    function openImage(sculptureIndex, imageIndex = 0) {
+      currentSculptureIndex = sculptureIndex;
+      currentImageIndex = imageIndex;
+      const sculpture = sculptures[sculptureIndex];
+      const lightbox = document.getElementById("lightbox");
+      const lightboxImg = document.getElementById("lightbox-img");
+      const lightboxText = document.getElementById("lightbox-text");
+
+      lightboxImg.src = sculpture.images[imageIndex];
+      lightboxText.textContent = sculpture.title + "\n" + sculpture.description;
+      lightbox.style.display = "flex";
+    }
+
+    function closeImage(event) {
+      if(event) event.stopPropagation();
+      document.getElementById("lightbox").style.display = "none";
+    }
+
+    function prevImage(event) {
+      event.stopPropagation();
+      currentImageIndex--;
+      if (currentImageIndex < 0) {
+        currentImageIndex = sculptures[currentSculptureIndex].images.length - 1;
+      }
+      updateImage();
+    }
+
+    function nextImage(event) {
+      event.stopPropagation();
+      currentImageIndex++;
+      if (currentImageIndex >= sculptures[currentSculptureIndex].images.length) {
+        currentImageIndex = 0;
+      }
+      updateImage();
+    }
+
+    function updateImage() {
+      const sculpture = sculptures[currentSculptureIndex];
+      const lightboxImg = document.getElementById("lightbox-img");
+      const lightboxText = document.getElementById("lightbox-text");
+
+      lightboxImg.src = sculpture.images[currentImageIndex];
+      lightboxText.textContent = sculpture.title + "\n" + sculpture.description;
+    }
+  </script>
+</body>
+
+</html>

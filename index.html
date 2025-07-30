@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" id="landing-page">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>whh</title>
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: SairaExtraCondensed-Light;
+            font-size: 18px; /* base font size for entire page */
+        }
+
+        .highlight {
+            color: #80DEEA;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.1);
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+
+        .highlight:hover {
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+            transition: text-shadow 0.3s ease-in-out;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        #landing-page .nav-menu {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+            font-size: 20px; /* increased from 18px */
+            color: white;
+            z-index: 2;
+        }
+
+        #landing-page .nav-menu a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #landing-page .nav-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+            color: white;
+            z-index: 1;
+            position: relative;
+            padding-top: 10px;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 110px;
+            width: auto;
+        }
+
+        .text-section {
+            margin-bottom: 20px;
+            max-width: 80%;
+        }
+
+        /* New text sizing */
+        .text-section p {
+            font-size: 20px;
+            line-height: 1.;
+        }
+
+        .text-section h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: black;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            z-index: 1;
+            font-size: 14px; /* smaller footer text */
+        }
+
+        /* 🔗 Social Links Styling */
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            color: #80DEEA;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #FFCC80;
+        }
+
+        .social-links i {
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body id="landing-page">
+    <!-- Fullscreen video background -->
+    <video class="video-background" autoplay loop muted id="background-video">
+        <source src="images/Swatches_Blend.mp4" type="video/mp4" />
+        <source src="images/messy2.mp4" type="video/.mp4" />
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Navigation Menu -->
+    <div class="nav-menu">
+        <a href="gallery.html">Gallery</a>
+        <a href="sculpture.html">Sculpture</a>
+        <a href="https://payhip.com/wehaveheaven" target="_blank">Shop</a>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <img src="images/WHHW.png" alt="Logo" class="logo" />
+        <div class="text-section">
+            <h2>*</h2>
+            <p>
+                <span class="highlight">wehaveheaven</span> is an artist spanning painting, drawing, design, video, and poetry.<br c />
+                
+                If you would like to support my work, please visit my Patreon, or buy a print (or original) in my shop.<br />
+                All work is available in high quality art print, and some originals while in stock. <br /> 
+                I am available for special commissions, murals, and expositions too.<br><brYour support is greatly valued across all platforms.<br><br
+                <p>
+                    Contact me:
+                    <a href="mailto:w.have.heaven@gmail.com"><span class="highlight">w.have.heaven@gmail.com</span></a>
+                </p>
+            </p>
+
+            <!-- 🔗 Social Links -->
+            <div class="social-links">
+                <a href="https://patreon.com/We_Have_Heaven_Art" target="_blank"><i class="fab fa-patreon"></i> Patreon</a>
+                <a href="https://youtube.com/yourchannel" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+                <a href="https://instagram.com/wehaveheaven" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://wehaveheaven.substack.com" target="_blank"><i class="fas fa-envelope-open-text"></i> Substack</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('background-video');
+        video.playbackRate = 0.5;
+    </script>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Whh</p>
+    </footer>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>whh - Gallery</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="Gallery.js" defer></script>
+
+  <script>
+    function openImage(src, description) {
+      document.getElementById("lightbox-img").src = src;
+      document.getElementById("lightbox-text").innerText = description;
+      document.getElementById("lightbox").style.display = "flex";
+    }
+
+    function closeImage() {
+      document.getElementById("lightbox").style.display = "none";
+    }
+  </script>
+
+  <style>
+    body {
+      background: linear-gradient(to bottom, #270833, #4B716B);
+      color: rgba(32, 247, 234);
+      margin: 0;
+      font-family: SairaExtraCondensed-Light;
+    }
+
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 110px;
+      width: auto;
+      z-index: 1;
+    }
+
+    .nav-menu {
+      position: absolute;
+      top: 130px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 30px;
+      font-size: 26px;
+      z-index: 2;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: rgba(32, 247, 234);
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .nav-menu a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* bigger items */
+  gap: 20px;
+  padding: 200px 20px 20px;
+  max-width: 1600px;
+  margin: auto;
+}
+
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.1);
+    }
+
+    .image-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      text-align: center;
+      padding: 5px 10px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .gallery-item:hover .image-title {
+      opacity: 1;
+    }
+
+    #lightbox {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #lightbox img {
+      max-width: 50%;
+      max-height: 80%;
+      margin-right: 20px;
+    }
+
+    #lightbox span {
+      position: absolute;
+      top: 20px; right: 40px;
+      font-size: 30px;
+      color: white;
+      cursor: pointer;
+    }
+
+    #lightbox-text {
+      color: white;
+      font-size: 18px;
+      max-width: 40%;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: black;
+      width: 100%;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Centered logo -->
+  <img src="images/WHHI.png" alt="Logo" class="logo" />
+
+  <!-- Navigation Menu -->
+  <div class="nav-menu">
+    <a href="index.html">Home</a>
+    <a href="sculpture.html">Sculpture</a>
+    <a href="https://payhip.com/wehaveheaven" target="_blank">Shop</a>
+  </div>
+
+  <!-- Gallery section (populated by Gallery.js) -->
+  <section class="gallery"></section>
+  
+  <div id="imageModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <div id="modalCaption"></div>
+  </div>
+</body>
+
+ <!-- Lightbox with Carousel Controls -->
+<div id="lightbox" onclick="closeImage()" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; flex-direction: column; text-align: center; padding: 20px; z-index: 1000;">
+  <span style="position: absolute; top: 20px; right: 40px; font-size: 30px; color: white; cursor: pointer;" onclick="closeImage()">&times;</span>
+  <img id="lightbox-img" style="max-width: 80%; max-height: 80%;" />
+  <p id="lightbox-text" style="color: white; font-size: 18px; max-width: 80%; margin-top: 10px;"></p>
+</div>
+
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Whh</p>
+  </footer>
+</body>
+</html>
